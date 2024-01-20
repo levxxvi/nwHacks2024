@@ -16,10 +16,10 @@ body {
     justify-content: center;
     min-height: 100vh;
     background: #eeede6;
+    font-family: 'Poppins', sans-serif;
 }
 
 .wrapper {
-
     width: 450px;
     background: #fff;
     border-radius: 10px;
@@ -122,4 +122,45 @@ header .current-date {
 
 .days li:not(.active):hover::before {
     background: #f2f2f2;
+}
+
+.mood-selector {
+    float: right;
+    padding: 15px 30px;
+}
+
+.mood-button {
+    border-radius: 20px;
+    transition-duration: 4ms;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100px;
+    border: none;
+}
+
+#happy {
+    background-color: #FBF8CC;
+}
+
+#happy:hover {
+    background-color: white;
+    border: 2px solid #FBF8CC;
+}
+
+#sad {
+    background-color: #A3C4F3;
+}
+
+#sad:hover {
+    background-color: white;
+    border: 2px solid #A3C4F3;
+}
+
+#angry {
+    background-color: #F3A3A3;
+}
+
+#angry:hover {
+    background-color: white;
+    border: 2px solid #F3A3A3;
 }

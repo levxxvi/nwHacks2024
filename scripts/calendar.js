@@ -55,3 +55,15 @@ prevNextIcon.forEach(icon => { // getting prev and next icons
         renderCalendar(); // calling renderCalendar function
     });
 });
+
+function happy() {
+    console.log("happy");
+    window.getComputedStyle(
+        document.querySelector('.active'), ':before'
+    ).getPropertyValue('background-color');
+    document.getElementsByClassName("active").background = "#FBF8CC";
+}
+
+// getDataFromDatabase() async {
+
+// }
