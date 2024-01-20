@@ -3,23 +3,29 @@
 }
 body {
   font-size: 14px;
+  background: rgba(238,237,230,1);
+  justify-content: center;
+  align-items: center;
+
 }
 .v1_2 {
+  display: flex;
   width: 100%;
   height: 1024px;
   background: rgba(238,237,230,1);
   opacity: 1;
-  position: relative;
   top: 0px;
   left: 0px;
-  overflow: hidden;
+  justify-content: center;
+  align-items: center;
 }
 .v6_5 {
-  width: 481px;
-  height: 600px;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: 800px;
   background: rgba(213,210,184,1);
   opacity: 1;
-  position: absolute;
   top: 212px;
   left: 492px;
   border-top-left-radius: 10px;
@@ -27,62 +33,69 @@ body {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   overflow: hidden;
+  justify-content: center;
+  margin-top: 15%;
 }
-.v5_2 {
+.button {
   width: 331px;
-  height: 76px;
-  background: rgba(30,185,85,1);
+  height: 100px;
+  background-color: rgba(30,185,85,1);
   padding: 10px 10px;
-  margin: 10px;
-  opacity: 1;
-  position: absolute;
+  margin-bottom: 50%;
   top: 416px;
   left: 75px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border: none;
+  justify-self: center;
+  text-align: center;
+  font-size: xx-large;
+  border-radius: 50px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
 }
 .v6_76 {
-  width: 105px;
+  display: flex;
+  width: 300px;
   color: rgba(255,255,255,1);
-  position: absolute;
-  top: 434px;
-  left: 188px;
+  position: relative;
   font-family: Inter;
   font-weight: Extra Bold;
   font-size: 32px;
   opacity: 1;
   text-align: center;
+  justify-content: center;
+  margin-left: 25%;
+
 }
 .v6_6 {
-  width: 379px;
+  display: flex;
   color: rgba(0,0,0,1);
-  position: absolute;
-  top: 242px;
-  left: 41px;
+  position: relative;
   font-family: Inter;
-  font-weight: Extra Bold;
-  font-size: 50px;
+  font-weight: 900;
+  font-size: 70px;
   opacity: 1;
+  justify-content: center;
+  justify-self: center;
+  margin-top: 5%;
+  margin-bottom: 15%;
   text-align: center;
 }
 .v6_106 {
-  width: 177px;
-  height: 181px;
+  display: flex;
+  width: 234px;
+  height: 234px;
   background: url("../images/v6_106.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
   opacity: 1;
-  position: absolute;
-  top: 42px;
-  left: 152px;
+  position: relative;  
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  overflow: hidden;
+  justify-self: center;
+  justify-content: center;
+  margin-top: 5%;
+  align-self:baseline;
+  margin-left: 30%;
 }
