@@ -13,6 +13,34 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"
 ];
 
+function checkPreviousMoods() {
+    // pull data from sql; basically check all the dates in this month and change the color as needed
+    con.connect(function (err) {
+        if (err) throw err;
+        console.log("Connected!");
+        client.query("SELECT * FROM moodtracker WHERE user = 'testuser' AND date = ?", [currYear + "-" + (currMonth + 1) + "-" + i], function (err, result) {
+            if (err) throw err;
+            console.log(result);
+            if (result.length > 0) {
+                console.log(result[0].mood);
+                if (result[0].mood == "happy") {
+                    $('.active').addClass("happy");
+                } else if (result[0].mood == "neutral") {
+                    $('.active').addClass("neutral");
+                } else if (result[0].mood == "sad") {
+                    $('.active').addClass("sad");
+                } else if (result[0].mood == "angry") {
+                    $('.active').addClass("angry");
+                } else if (result[0].mood == "tired") {
+                    $('.active').addClass("tired");
+                } else if (result[0].mood == "stressed") {
+                    $('.active').addClass("stressed");
+                }
+            }
+        });
+    });
+}
+
 const renderCalendar = () => {
     let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(), // getting first day of month
         lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // getting last date of month
@@ -29,31 +57,33 @@ const renderCalendar = () => {
         let isToday = i === date.getDate() && currMonth === new Date().getMonth() && currYear === new Date().getFullYear() ? "active" : "";
         liTag += `<li class="${isToday}">${i}</li>`;
 
-        // pull data from sql; basically check all the dates in this month and change the color as needed
-        con.connect(function (err) {
-            if (err) throw err;
-            console.log("Connected!");
-            client.query("SELECT * FROM moodtracker WHERE user = 'testuser' AND date = ?", [currYear + "-" + (currMonth + 1) + "-" + i], function (err, result) {
-                if (err) throw err;
-                console.log(result);
-                if (result.length > 0) {
-                    console.log(result[0].mood);
-                    if (result[0].mood == "happy") {
-                        $('.active').addClass("happy");
-                    } else if (result[0].mood == "neutral") {
-                        $('.active').addClass("neutral");
-                    } else if (result[0].mood == "sad") {
-                        $('.active').addClass("sad");
-                    } else if (result[0].mood == "angry") {
-                        $('.active').addClass("angry");
-                    } else if (result[0].mood == "tired") {
-                        $('.active').addClass("tired");
-                    } else if (result[0].mood == "stressed") {
-                        $('.active').addClass("stressed");
-                    }
-                }
-            });
-        });
+        checkPreviousMoods();
+
+        // // pull data from sql; basically check all the dates in this month and change the color as needed
+        // con.connect(function (err) {
+        //     if (err) throw err;
+        //     console.log("Connected!");
+        //     client.query("SELECT * FROM moodtracker WHERE user = 'testuser' AND date = ?", [currYear + "-" + (currMonth + 1) + "-" + i], function (err, result) {
+        //         if (err) throw err;
+        //         console.log(result);
+        //         if (result.length > 0) {
+        //             console.log(result[0].mood);
+        //             if (result[0].mood == "happy") {
+        //                 $('.active').addClass("happy");
+        //             } else if (result[0].mood == "neutral") {
+        //                 $('.active').addClass("neutral");
+        //             } else if (result[0].mood == "sad") {
+        //                 $('.active').addClass("sad");
+        //             } else if (result[0].mood == "angry") {
+        //                 $('.active').addClass("angry");
+        //             } else if (result[0].mood == "tired") {
+        //                 $('.active').addClass("tired");
+        //             } else if (result[0].mood == "stressed") {
+        //                 $('.active').addClass("stressed");
+        //             }
+        //         }
+        //     });
+        // });
     }
 
     for (let i = lastDayofMonth; i < 6; i++) { // creating li of next month first days
@@ -89,8 +119,6 @@ function happy() {
     $('.active').removeClass("angry");
     $('.active').removeClass("tired");
     $('.active').removeClass("stressed");
-
-    journalMood("happy");
 }
 
 function neutral() {
@@ -101,8 +129,6 @@ function neutral() {
     $('.active').removeClass("angry");
     $('.active').removeClass("tired");
     $('.active').removeClass("stressed");
-
-    journalMood("neutral");
 }
 
 function sad() {
@@ -113,8 +139,6 @@ function sad() {
     $('.active').removeClass("angry");
     $('.active').removeClass("tired");
     $('.active').removeClass("stressed");
-
-    journalMood("sad");
 }
 
 function angry() {
@@ -125,8 +149,6 @@ function angry() {
     $('.active').removeClass("neutral");
     $('.active').removeClass("tired");
     $('.active').removeClass("stressed");
-
-    journalMood("angry");
 }
 
 function tired() {
@@ -137,8 +159,6 @@ function tired() {
     $('.active').removeClass("neutral");
     $('.active').removeClass("angry");
     $('.active').removeClass("stressed");
-
-    journalMood("tired");
 }
 
 function stressed() {
@@ -149,8 +169,6 @@ function stressed() {
     $('.active').removeClass("neutral");
     $('.active').removeClass("angry");
     $('.active').removeClass("tired");
-
-    journalMood("stressed");
 }
 
 // function journalMood(mood) {
