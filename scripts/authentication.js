@@ -91,8 +91,8 @@ var uiConfig = {
         // }
     },
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-    signInFlow: 'redirect',
-    signInSuccessUrl: '/templates/home.html',
+    signInFlow: 'popup',
+    signInSuccessUrl: 'templates/home.html',
     signInOptions: [
         firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
