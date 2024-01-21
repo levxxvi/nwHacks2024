@@ -2,7 +2,7 @@
 # pip3 install spotipy Flask Flask-Session
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-from flask import Flask ,redirect,request
+from flask import Flask ,redirect,request, render_template
 from flask_session import Session
 import os
 
@@ -19,7 +19,7 @@ app.config['API_BASE_URL'] = 'https://api.spotify.com/v1'
 
 @app.route('/')
 def index():
-    return "hehe<a href='/login'>Sign in</a>"
+    return render_template('home.html')
 
 @app.route('/login')
 def login():
