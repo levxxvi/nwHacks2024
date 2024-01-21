@@ -13,6 +13,7 @@ const months = ["January", "February", "March", "April", "May", "June", "July",
     "August", "September", "October", "November", "December"
 ];
 
+// need to instantiate client
 function checkPreviousMoods() {
     // pull data from sql; basically check all the dates in this month and change the color as needed
     con.connect(function (err) {
@@ -41,6 +42,10 @@ function checkPreviousMoods() {
     });
 }
 
+function getRandomInt(max) {
+      return Math.floor(Math.random() * max);
+}
+
 const renderCalendar = () => {
     let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(), // getting first day of month
         lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // getting last date of month
@@ -53,37 +58,27 @@ const renderCalendar = () => {
     }
 
     for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
+        var mood = getRandomInt(6);
+        console.log(mood);
+        if (mood == 0) {
+            liTag += `<li class="happy">${i}</li>`;
+        } else if (mood == 1) {
+            liTag += `<li class="neutral">${i}</li>`;
+        } else if (mood == 2) {
+            liTag += `<li class="sad">${i}</li>`;
+        } else if (mood == 3) {
+            liTag += `<li class="angry">${i}</li>`;
+        } else if (mood == 4) {
+            liTag += `<li class="tired">${i}</li>`;
+        } else if (mood == 5) {
+            liTag += `<li class="stressed">${i}</li>`;
+        }
+
         // adding active class to li if the current day, month, and year matched
         let isToday = i === date.getDate() && currMonth === new Date().getMonth() && currYear === new Date().getFullYear() ? "active" : "";
         liTag += `<li class="${isToday}">${i}</li>`;
 
-        checkPreviousMoods();
-
-        // // pull data from sql; basically check all the dates in this month and change the color as needed
-        // con.connect(function (err) {
-        //     if (err) throw err;
-        //     console.log("Connected!");
-        //     client.query("SELECT * FROM moodtracker WHERE user = 'testuser' AND date = ?", [currYear + "-" + (currMonth + 1) + "-" + i], function (err, result) {
-        //         if (err) throw err;
-        //         console.log(result);
-        //         if (result.length > 0) {
-        //             console.log(result[0].mood);
-        //             if (result[0].mood == "happy") {
-        //                 $('.active').addClass("happy");
-        //             } else if (result[0].mood == "neutral") {
-        //                 $('.active').addClass("neutral");
-        //             } else if (result[0].mood == "sad") {
-        //                 $('.active').addClass("sad");
-        //             } else if (result[0].mood == "angry") {
-        //                 $('.active').addClass("angry");
-        //             } else if (result[0].mood == "tired") {
-        //                 $('.active').addClass("tired");
-        //             } else if (result[0].mood == "stressed") {
-        //                 $('.active').addClass("stressed");
-        //             }
-        //         }
-        //     });
-        // });
+        // checkPreviousMoods();
     }
 
     for (let i = lastDayofMonth; i < 6; i++) { // creating li of next month first days
@@ -93,6 +88,8 @@ const renderCalendar = () => {
     daysTag.innerHTML = liTag;
 }
 renderCalendar();
+
+
 
 prevNextIcon.forEach(icon => { // getting prev and next icons
     icon.addEventListener("click", () => { // adding click event on both icons
