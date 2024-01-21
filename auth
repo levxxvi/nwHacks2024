@@ -42,12 +42,15 @@ def callback():
         spotify = spotipy.Spotify(auth_manager=auth_manager)
 
         return "hehe<a href='/login'>asdasd</a>"
-    
+    return render_template('home.html')
+
 @app.route('/recentlyplayed')
 def recentlyplayed():
-    recently_played = auth_manager.current_user_recently_played(limit=50)
+    recently_played = auth_manager.current_user_recently_played(limit=500)
 
+    past_day_timestamp = (datetime.now() - timedelta(days=1)).timestamp()
 
+    recently_played_in_past_day = [track for track in recently_played['items'] if track['played_at'] > past_day_timestamp]
 if __name__ == "__main__":
     app.run()
     
