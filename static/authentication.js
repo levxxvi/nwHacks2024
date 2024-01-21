@@ -1,6 +1,8 @@
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
+console.log("Funny")
+
 // ui.start('#firebaseui-auth-container', {
 //     signInOptions: [
 //         firebase.auth.EmailAuthProvider.PROVIDER_ID
@@ -56,16 +58,19 @@ var uiConfig = {
             //------------------------------------------------------------------------------------------
             var user = authResult.user; // get the user object from the Firebase authentication database
             if (authResult.additionalUserInfo.isNewUser) { //if new user
+                console.log(user.displayName)
+                console.log(user.email)
                 db.collection("users").doc(user.uid).set({ //write to firestore. We are using the UID for the ID in users collection
                         name: user.displayName, //"users" collection
                         email: user.email, //with authenticated user's ID (user.uid)
                     }).then(function () {
                         console.log("New user added to firestore");
-                        window.location.assign("index.html"); //re-direct to index.html after signup
+                        window.location.assign("home.html"); //re-direct to index.html after signup
                     })
                     .catch(function (error) {
                         console.log("Error adding new user: " + error);
                     });
+                console.log("New user signed up");
                 //creates a new subcollection for the user's emotions
                 db.collection("users").doc(user.uid).collection(user.displayName + "Moods").doc("2023-01-19").set({
                     date: "2023-01-19",
@@ -77,6 +82,7 @@ var uiConfig = {
                 console.log(user.uid);
                 console.log(user.displayName)
             } else {
+                console.log("Running")
                 localStorage.setItem('userUid', user.uid)
                 localStorage.setItem('userDisplayName', user.displayName)
                 console.log(user.uid);
@@ -92,7 +98,7 @@ var uiConfig = {
     },
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
     signInFlow: 'popup',
-    signInSuccessUrl: 'templates/home.html',
+    signInSuccessUrl: 'home.html',
     signInOptions: [
         firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
@@ -102,9 +108,15 @@ var uiConfig = {
     privacyPolicyUrl: '<your-privacy-policy-url>'
 };
 
-ui.start('#firebaseui-auth-container', {
-    signInOptions: [
-        firebase.auth.EmailAuthProvider.PROVIDER_ID
-    ],
-    // Other config options...
-});
+// ui.start('#firebaseui-auth-container', {
+//     signInOptions: [
+//         firebase.auth.EmailAuthProvider.PROVIDER_ID
+//     ],
+//     // Other config options...
+// });
+
+ui.start('#firebaseui-auth-container', uiConfig);
+
+// function redirect() {
+//     window.location.assign("templates/calendar.html");
+// }
