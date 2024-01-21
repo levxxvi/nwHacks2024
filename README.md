@@ -13,9 +13,9 @@
 Technologies used for nwHacks2024 are:
 
 * HTML, CSS
-* JavaScript
+* JavaScript, Node.js
 * Python
 * Flask
 * Spotify API
 * Spotipy
-* Firebase
+* MySQL
