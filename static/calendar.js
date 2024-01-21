@@ -1,10 +1,3 @@
-var mysql = require('mysql');
-var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    database: "nwhacks"
-});
-
 // From: https://www.codingnepalweb.com/dynamic-calendar-html-css-javascript/
 const daysTag = document.querySelector(".days"),
     currentDate = document.querySelector(".current-date"),
