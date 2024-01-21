@@ -85,15 +85,14 @@ var uiConfig = {
             }
             return false;
         },
-        uiShown: function () {
-            // The widget is rendered.
-            // Hide the loader.
-            document.getElementById('loader').style.display = 'none';
-        }
+        // uiShown: function () {
+        //     // The widget is rendered.
+        //     // Hide the loader.
+        // }
     },
     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-    signInFlow: 'popup',
-    signInSuccessUrl: 'HTML/index.html',
+    signInFlow: 'redirect',
+    signInSuccessUrl: '/templates/home.html',
     signInOptions: [
         firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
