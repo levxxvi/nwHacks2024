@@ -5,7 +5,7 @@ import os
 from datetime import datetime, timedelta, date
 import sys
 from flask_mysqldb import MySQL
-
+import configparser
 
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'localhost'
@@ -14,9 +14,12 @@ app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'nwhacks'
 mysql = MySQL(app)
 
+config = configparser.ConfigParser()
+config.read('config.ini')
+
 app.secret_key = 'sdaefascsasv'
-app.config['CLIENT_ID'] = '9f8720c821a34ee7b1b881bea3257a50'
-app.config['CLIENT_SECRET'] = 'da562de7e4394d559b22fa455bd7e005'
+app.config['CLIENT_ID'] = config['spotify']['CLIENT_ID']
+app.config['CLIENT_SECRET'] = config['spotify']['CLIENT_SECRET']
 app.config['REDIRECT_URI'] = 'http://localhost:5000/callback'
 app.config['AUTH_URL'] = 'https://accounts.spotify.com/authorize'
 app.config['TOKEN_URL'] = 'https://accounts.spotify.com/api/token'

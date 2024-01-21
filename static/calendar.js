@@ -66,23 +66,7 @@ function happy() {
     $('.active').removeClass("tired");
     $('.active').removeClass("stressed");
 
-    let date = new Date().toJSON().slice(0, 10);
-    console.log(date);
-
-    // add the mood to sql
-    con.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected!");
-        var sql = "INSERT INTO moodtracker (date, mood) VALUES (?);", [date];
-        // (date, 'happy')";
-        con.query(sql, function (err, result) {
-            if (err) throw err;
-            console.log("1 record inserted");
-        });
-    });
-}
-async function myFunction(mood) {
-    const a = await fetch("/update?data=" + mood)
+    journalMood("happy");
 }
 
 function neutral() {
@@ -93,6 +77,8 @@ function neutral() {
     $('.active').removeClass("angry");
     $('.active').removeClass("tired");
     $('.active').removeClass("stressed");
+
+    journalMood("neutral");
 }
 
 function sad() {
@@ -103,6 +89,8 @@ function sad() {
     $('.active').removeClass("angry");
     $('.active').removeClass("tired");
     $('.active').removeClass("stressed");
+
+    journalMood("sad");
 }
 
 function angry() {
@@ -113,6 +101,8 @@ function angry() {
     $('.active').removeClass("neutral");
     $('.active').removeClass("tired");
     $('.active').removeClass("stressed");
+
+    journalMood("angry");
 }
 
 function tired() {
@@ -123,6 +113,8 @@ function tired() {
     $('.active').removeClass("neutral");
     $('.active').removeClass("angry");
     $('.active').removeClass("stressed");
+
+    journalMood("tired");
 }
 
 function stressed() {
@@ -133,4 +125,43 @@ function stressed() {
     $('.active').removeClass("neutral");
     $('.active').removeClass("angry");
     $('.active').removeClass("tired");
+
+    journalMood("stressed");
 }
+
+function journalMood(mood) {
+    let date = new Date().toJSON().slice(0, 10);
+    console.log(date);
+
+    // add the mood to sql
+    con.connect(function (err) {
+        if (err) throw err;
+        console.log("Connected!");
+        client.query(
+            "INSERT INTO moodtracker (date, mood) VALUES (?, ?) ON DUPLICATE KEY UPDATE mood=VALUES(mood)", [date, mood],
+            function (err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        });
+    });
+}
+
+// function journalMood(mood) {
+//     let date = new Date().toJSON().slice(0, 10);
+//     console.log(date);
+
+//     // add the mood to sql
+//     con.connect(function (err) {
+//         if (err) throw err;
+//         console.log("Connected!");
+//         // var sql = "INSERT INTO moodtracker (date, mood) VALUES (?);", [date];
+//         // con.query(sql, function (err, result) {
+//         //     if (err) throw err;
+//         //     console.log("1 record inserted");
+//         // });
+//         client.query("Insert into moodtracker (date, mood) VALUES (?, ?);", [date, mood], function (err, result) {
+//             if (err) throw err;
+//             console.log("1 record inserted");
+//         });
+//     });
+// }
