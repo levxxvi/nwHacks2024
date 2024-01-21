@@ -35,6 +35,8 @@ const renderCalendar = () => {
     }
     currentDate.innerText = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
     daysTag.innerHTML = liTag;
+
+    // pull data from sql; basically check all the dates in this month and change the color as needed
 }
 renderCalendar();
 
@@ -64,11 +66,25 @@ function happy() {
     $('.active').removeClass("tired");
     $('.active').removeClass("stressed");
 
-    // add the mood to firebase
+    let date = new Date().toJSON().slice(0, 10);
+    console.log(date);
+
+    // add the mood to sql
+    con.connect(function (err) {
+        if (err) throw err;
+        console.log("Connected!");
+        var sql = "INSERT INTO moodtracker (date, mood) VALUES (?);", [date];
+        // (date, 'happy')";
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        });
+    });
 }
 async function myFunction(mood) {
-    const a = await fetch("/update?data="+mood)
+    const a = await fetch("/update?data=" + mood)
 }
+
 function neutral() {
     $('.active').addClass("neutral");
 

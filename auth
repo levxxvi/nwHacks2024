@@ -72,7 +72,12 @@ def callback():
 
 @app.route('/calendar', methods = ['POST', 'GET'])
 def calendar():
-    
+    uid=
+    cursor = mysql.connection.cursor()
+    cursor.execute(''' SELECT * FROM moodtracker WHERE User=%s ORDER BY''', (uid,uid,now,))
+    mysql.connection.commit()
+    cursor.close()
+
 @app.route('/update', methods = ['POST', 'GET'])
 def update():
     arr = ["Happy", "Neutral", "Sad", "Angry", "Tired", "Stressed"]
