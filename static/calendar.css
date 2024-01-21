@@ -124,6 +124,30 @@ header .current-date {
     background: #f2f2f2;
 }
 
+.days li:not(.active.happy)::before {
+    background: #FBF8CC;
+}
+
+.days li:not(.active.neutral)::before {
+    background: #B9FBC0;
+}
+
+.days li:not(.active.sad)::before {
+    background: #A3C4F3;
+}
+
+.days li:not(.active.angry)::before {
+    background: #F3A3A3;
+}
+
+.days li:not(.active.tired)::before {
+    background: #90DBF4;
+}
+
+.days li:not(.active.stressed)::before {
+    background: #CFBAF0;
+}
+
 .mood-selector {
     float: right;
     padding: 15px 30px;
