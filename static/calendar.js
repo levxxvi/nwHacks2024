@@ -28,6 +28,32 @@ const renderCalendar = () => {
         // adding active class to li if the current day, month, and year matched
         let isToday = i === date.getDate() && currMonth === new Date().getMonth() && currYear === new Date().getFullYear() ? "active" : "";
         liTag += `<li class="${isToday}">${i}</li>`;
+
+        // pull data from sql; basically check all the dates in this month and change the color as needed
+        con.connect(function (err) {
+            if (err) throw err;
+            console.log("Connected!");
+            client.query("SELECT * FROM moodtracker WHERE user = 'testuser' AND date = ?", [currYear + "-" + (currMonth + 1) + "-" + i], function (err, result) {
+                if (err) throw err;
+                console.log(result);
+                if (result.length > 0) {
+                    console.log(result[0].mood);
+                    if (result[0].mood == "happy") {
+                        $('.active').addClass("happy");
+                    } else if (result[0].mood == "neutral") {
+                        $('.active').addClass("neutral");
+                    } else if (result[0].mood == "sad") {
+                        $('.active').addClass("sad");
+                    } else if (result[0].mood == "angry") {
+                        $('.active').addClass("angry");
+                    } else if (result[0].mood == "tired") {
+                        $('.active').addClass("tired");
+                    } else if (result[0].mood == "stressed") {
+                        $('.active').addClass("stressed");
+                    }
+                }
+            });
+        });
     }
 
     for (let i = lastDayofMonth; i < 6; i++) { // creating li of next month first days
@@ -35,8 +61,6 @@ const renderCalendar = () => {
     }
     currentDate.innerText = `${months[currMonth]} ${currYear}`; // passing current mon and yr as currentDate text
     daysTag.innerHTML = liTag;
-
-    // pull data from sql; basically check all the dates in this month and change the color as needed
 }
 renderCalendar();
 
@@ -129,22 +153,22 @@ function stressed() {
     journalMood("stressed");
 }
 
-function journalMood(mood) {
-    let date = new Date().toJSON().slice(0, 10);
-    console.log(date);
+// function journalMood(mood) {
+//     let date = new Date().toJSON().slice(0, 10);
+//     console.log(date);
 
-    // add the mood to sql
-    con.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected!");
-        client.query(
-            "INSERT INTO moodtracker (date, mood) VALUES (?, ?) ON DUPLICATE KEY UPDATE mood=VALUES(mood)", [date, mood],
-            function (err, result) {
-            if (err) throw err;
-            console.log("1 record inserted");
-        });
-    });
-}
+//     // add the mood to sql
+//     con.connect(function (err) {
+//         if (err) throw err;
+//         console.log("Connected!");
+//         client.query(
+//             "INSERT INTO moodtracker (user, date, mood) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE mood=VALUES(mood)", [date, mood],
+//             function (err, result) {
+//             if (err) throw err;
+//             console.log("1 record inserted");
+//         });
+//     });
+// }
 
 // function journalMood(mood) {
 //     let date = new Date().toJSON().slice(0, 10);
