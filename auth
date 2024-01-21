@@ -50,6 +50,10 @@ def callback():
 
         recently_played = sp.current_user_recently_played(limit=50)
         
+        user_info = sp.current_user()
+        user_id = user_info['id']
+
+        print(user_id)
         
         if recently_played['items']:
             track_count = {}
