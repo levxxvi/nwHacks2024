@@ -83,12 +83,12 @@ def calendar():
     uid=sp.current_user()['id']
     cursor = mysql.connection.cursor()
     cursor.execute(''' SELECT * FROM moodtracker WHERE User=%s ORDER BY Date DESC LIMIT 1''', (uid,))
-    cursor.commit()
+    mysql.connection.commit()
     day = cursor.fetchall()[0][1]
     now = date.today()
     if day!=now:
         cursor.execute(''' INSERT INTO moodtracker VALUES(%s,%s,%s,%s)''', (uid,now,"",""))
-        cursor.commit()
+        mysql.connection.commit()
         yest = date.today()-timedelta(days=1)
         cursor.execute(''' UPDATE moodtracker SET Song=%s WHERE User=%s AND Date=%s''', (most_played_track_id,uid,yest,))
 
