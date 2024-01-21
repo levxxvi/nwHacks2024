@@ -43,7 +43,7 @@ def login():
 
 @app.route('/callback')
 def callback():
-    global sp
+    global sp, track_link
     if request.args.get("code"):
         code = auth_manager.parse_response_code(request.args.get("code"))
         token_info = auth_manager.get_access_token(code)
@@ -66,8 +66,12 @@ def callback():
                 track_count[track_id] = track_count.get(track_id, 0) + 1
 
             most_played_track_id = max(track_count, key=track_count.get)
-            
-            print(f"Most played track ID in the past day: {most_played_track_id}")
+
+            most_played_track = sp.track(most_played_track_id)
+            track_name = most_played_track['name']
+            artists = [artist['name'] for artist in most_played_track['artists']]
+            track_link = most_played_track['external_urls']['spotify']  # Spotify Web URL
+            print(track_link)
 
             return redirect('/calendar')
     
@@ -81,19 +85,17 @@ def calendar():
     cursor.execute(''' SELECT * FROM moodtracker WHERE User=%s ORDER BY Date DESC LIMIT 1''', (uid,))
     cursor.commit()
     day = cursor.fetchall()[0][1]
-    print(day)
     now = date.today()
     if day!=now:
         cursor.execute(''' INSERT INTO moodtracker VALUES(%s,%s,%s,%s)''', (uid,now,"",""))
         cursor.commit()
-        yest = day.strftime('%Y-%m-%d')
-        
-        cursor.execute(''' UPDATE moodtracker SET Song=%s WHERE User=%s AND Date=%s''', (mood,uid,now,))
+        yest = date.today()-timedelta(days=1)
+        cursor.execute(''' UPDATE moodtracker SET Song=%s WHERE User=%s AND Date=%s''', (most_played_track_id,uid,yest,))
 
     
     mysql.connection.commit()
     cursor.close()
-    return render_template('calendar.html')
+    return render_template('calendar.html', track_link=track_link)
 
 @app.route('/update', methods = ['POST', 'GET'])
 def update():
@@ -107,7 +109,7 @@ def update():
     cursor.execute(''' UPDATE moodtracker SET Mood=%s WHERE User=%s AND Date=%s''', (mood,uid,now,))
     mysql.connection.commit()
     cursor.close()
-    return render_template('calendar.html')
+    return render_template('calendar.html', track_link=track_link)
 
 
 if __name__ == "__main__":
