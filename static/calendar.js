@@ -33,7 +33,7 @@ const renderCalendar = () => {
         con.connect(function (err) {
             if (err) throw err;
             console.log("Connected!");
-            client.query("SELECT * FROM moodtracker WHERE date = ?", [currYear + "-" + (currMonth + 1) + "-" + i], function (err, result) {
+            client.query("SELECT * FROM moodtracker WHERE user = 'testuser' AND date = ?", [currYear + "-" + (currMonth + 1) + "-" + i], function (err, result) {
                 if (err) throw err;
                 console.log(result);
                 if (result.length > 0) {
@@ -153,22 +153,22 @@ function stressed() {
     journalMood("stressed");
 }
 
-function journalMood(mood) {
-    let date = new Date().toJSON().slice(0, 10);
-    console.log(date);
+// function journalMood(mood) {
+//     let date = new Date().toJSON().slice(0, 10);
+//     console.log(date);
 
-    // add the mood to sql
-    con.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected!");
-        client.query(
-            "INSERT INTO moodtracker (date, mood) VALUES (?, ?) ON DUPLICATE KEY UPDATE mood=VALUES(mood)", [date, mood],
-            function (err, result) {
-            if (err) throw err;
-            console.log("1 record inserted");
-        });
-    });
-}
+//     // add the mood to sql
+//     con.connect(function (err) {
+//         if (err) throw err;
+//         console.log("Connected!");
+//         client.query(
+//             "INSERT INTO moodtracker (user, date, mood) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE mood=VALUES(mood)", [date, mood],
+//             function (err, result) {
+//             if (err) throw err;
+//             console.log("1 record inserted");
+//         });
+//     });
+// }
 
 // function journalMood(mood) {
 //     let date = new Date().toJSON().slice(0, 10);
