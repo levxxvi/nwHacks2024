@@ -66,23 +66,7 @@ function happy() {
     $('.active').removeClass("tired");
     $('.active').removeClass("stressed");
 
-    let date = new Date().toJSON().slice(0, 10);
-    console.log(date);
-
-    // add the mood to sql
-    con.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected!");
-        var sql = "INSERT INTO moodtracker (date, mood) VALUES (?);", [date];
-        // (date, 'happy')";
-        con.query(sql, function (err, result) {
-            if (err) throw err;
-            console.log("1 record inserted");
-        });
-    });
-}
-async function myFunction(mood) {
-    const a = await fetch("/update?data=" + mood)
+    journalMood("happy");
 }
 
 function neutral() {
@@ -133,4 +117,24 @@ function stressed() {
     $('.active').removeClass("neutral");
     $('.active').removeClass("angry");
     $('.active').removeClass("tired");
+}
+
+function journalMood(mood) {
+    let date = new Date().toJSON().slice(0, 10);
+    console.log(date);
+
+    // add the mood to sql
+    con.connect(function (err) {
+        if (err) throw err;
+        console.log("Connected!");
+        // var sql = "INSERT INTO moodtracker (date, mood) VALUES (?);", [date];
+        // con.query(sql, function (err, result) {
+        //     if (err) throw err;
+        //     console.log("1 record inserted");
+        // });
+        client.query("Insert into moodtracker (date, mood) VALUES (?, ?);", [date, mood], function (err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        });
+    });
 }
