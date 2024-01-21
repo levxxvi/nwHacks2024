@@ -7,9 +7,12 @@
     <title>Mood Tracker</title>
     <link rel="stylesheet" href="../css/calendar.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- Google Font Link for Icons -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+
     <script src="../scripts/calendar.js" defer></script>
 </head>
 
@@ -42,12 +45,11 @@
         <h1>How are you feeling today?</h1>
         <div class="mood-buttons">
             <button class="mood-button" id="happy" onclick="happy()">Happy</button>
+            <button class="mood-button" id="neutral" onclick="neutral()">Neutral</button>
             <button class="mood-button" id="sad" onclick="sad()">Sad</button>
             <button class="mood-button" id="angry" onclick="angry()">Angry</button>
             <button class="mood-button" id="tired" onclick="tired()">Tired</button>
             <button class="mood-button" id="stressed" onclick="stressed()">Stressed</button>
-            <button class="mood-button" id="anxious" onclick="anxious()">Anxious</button>
-            <button class="mood-button" id="neutral" onclick="neutral()">Neutral</button>
         </div>
     </div>
 
