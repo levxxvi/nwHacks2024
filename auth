@@ -48,33 +48,24 @@ def callback():
 
         sp = spotipy.Spotify(auth=token)
 
-        #token_info = auth_manager.get_access_token(request.args.get("code"), as_dict=False)
-
-        #potify = spotipy.Spotify(auth=token_info,auth_manager=auth_manager)
-
-        #app.logger.debug(token_info)
         recently_played = sp.current_user_recently_played(limit=50)
-        #app.logger.debug(recently_played)
         
+        user_info = sp.current_user()
+        user_id = user_info['id']
+
+        print(user_id)
         
         if recently_played['items']:
-            # Count the occurrences of each track ID
             track_count = {}
             for track in recently_played['items']:
                 track_id = track['track']['id']
                 track_count[track_id] = track_count.get(track_id, 0) + 1
 
-            # Find the most played track
             most_played_track_id = max(track_count, key=track_count.get)
             
-            # Get information about the most played track
-            most_played_track = sp.track(most_played_track_id)
-            track_name = most_played_track['name']
-            artists = [artist['name'] for artist in most_played_track['artists']]
-            
-            print(f"Most played track in the past day: {track_name} by {', '.join(artists)}")
+            print(f"Most played track ID in the past day: {most_played_track_id}")
 
-        return render_template('calendar.html')
+            return render_template('calendar.html')
     
     return redirect('/')
 
