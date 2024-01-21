@@ -66,7 +66,9 @@ function happy() {
 
     // add the mood to firebase
 }
-
+async function myFunction(mood) {
+    const a = await fetch("/update?data="+mood)
+}
 function neutral() {
     $('.active').addClass("neutral");
 

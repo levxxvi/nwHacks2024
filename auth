@@ -5,6 +5,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from flask import Flask ,redirect,request, render_template
 import os
 from datetime import datetime, timedelta
+from flask_mysqldb import MySQL
 
 
 app = Flask(__name__)
@@ -15,6 +16,12 @@ app.config['REDIRECT_URI'] = 'http://localhost:5000/callback'
 app.config['AUTH_URL'] = 'https://accounts.spotify.com/authorize'
 app.config['TOKEN_URL'] = 'https://accounts.spotify.com/api/token'
 app.config['API_BASE_URL'] = 'https://api.spotify.com/v1'
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'nwhacks'
+
+mysql = MySQL(app)
 
 auth_manager = spotipy.oauth2.SpotifyOAuth(app.config['CLIENT_ID'],
                                                app.config['CLIENT_SECRET'],
@@ -24,7 +31,7 @@ auth_manager = spotipy.oauth2.SpotifyOAuth(app.config['CLIENT_ID'],
 
 @app.route('/')
 def index():
-    return render_template('login.html')
+    return render_template('home.html')
 
 @app.route('/login')
 def login():
@@ -39,10 +46,27 @@ def callback():
         auth_manager.get_access_token(request.args.get("code"))
         spotify = spotipy.Spotify(auth_manager=auth_manager)
 
-        return render_template('calendar.html')
+        return redirect('/calendar')
     
     return render_template('home.html')
 
+@app.route('/calendar')
+def calendar():
+    return render_template('calendar.html')
+    
+@app.route('/update', methods = ['POST', 'GET'])
+def update():
+    arr = ["Happy", "Neutral", "Sad", "Angry", "Tired", "Stressed"]
+    mood = request.args.get('data')
+    while(mood not in arr):
+        mood = request.args.get('data')
+    now = datetime.now()
+    cursor = mysql.connection.cursor()
+    cursor.execute("UPDATE moodtracker SET Mood = %s limit 1", mood)
+    mysql.connection.commit()
+    cursor.close()
+    return redirect('/calendar')
+    
 @app.route('/recentlyplayed')
 def recentlyplayed():
     recently_played = auth_manager.current_user_recently_played(limit=500)
@@ -53,5 +77,5 @@ def recentlyplayed():
     return()
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
     
