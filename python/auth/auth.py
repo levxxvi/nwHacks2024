@@ -19,7 +19,7 @@ app.config['API_BASE_URL'] = 'https://api.spotify.com/v1'
 
 @app.route('/')
 def index():
-    return render_template('home.html')
+    return render_template('../home.html')
 
 @app.route('/login')
 def login():
