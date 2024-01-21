@@ -5,6 +5,8 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from flask import Flask ,redirect,request
 from flask_session import Session
 import os
+from datetime import datetime, timedelta
+
 
 app = Flask(__name__)
 app.secret_key = 'sdaefascsasv'
@@ -15,7 +17,11 @@ app.config['AUTH_URL'] = 'https://accounts.spotify.com/authorize'
 app.config['TOKEN_URL'] = 'https://accounts.spotify.com/api/token'
 app.config['API_BASE_URL'] = 'https://api.spotify.com/v1'
 
-
+auth_manager = spotipy.oauth2.SpotifyOAuth(app.config['CLIENT_ID'],
+                                               app.config['CLIENT_SECRET'],
+                                               app.config['REDIRECT_URI'],
+                                               scope='user-read-currently-playing playlist-modify-private',
+                                               show_dialog=True)
 
 @app.route('/')
 def index():
@@ -23,13 +29,6 @@ def index():
 
 @app.route('/login')
 def login():
-
-    auth_manager = spotipy.oauth2.SpotifyOAuth(app.config['CLIENT_ID'],
-                                               app.config['CLIENT_SECRET'],
-                                               app.config['REDIRECT_URI'],
-                                               scope='user-read-currently-playing playlist-modify-private',
-                                               show_dialog=True)
-    
     url_args = auth_manager.get_authorize_url()
 
     return redirect(url_args)
@@ -38,11 +37,14 @@ def login():
 def callback():
 
     if request.args.get("code"):
+
         auth_manager.get_access_token(request.args.get("code"))
         spotify = spotipy.Spotify(auth_manager=auth_manager)
 
-        return "hehe<a href='/login'>Sign in</a>"
+        return "hehe<a href='/login'>asdasd</a>"
     
+
+
 
 if __name__ == "__main__":
     app.run()
