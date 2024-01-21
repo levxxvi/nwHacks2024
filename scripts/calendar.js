@@ -56,18 +56,63 @@ prevNextIcon.forEach(icon => { // getting prev and next icons
 });
 
 function happy() {
-    console.log("happy");
-    // document.getElementsById('active').classList.add("happy");
-    // document.getElementsByClassName('active').className = "active, happy";
     $('.active').addClass("happy");
+
+    $('.active').removeClass("neutral");
+    $('.active').removeClass("sad");
+    $('.active').removeClass("angry");
+    $('.active').removeClass("tired");
+    $('.active').removeClass("stressed");
+
+    // add the mood to firebase
+}
+
+function neutral() {
+    $('.active').addClass("neutral");
+
+    $('.active').removeClass("happy");
+    $('.active').removeClass("sad");
+    $('.active').removeClass("angry");
+    $('.active').removeClass("tired");
+    $('.active').removeClass("stressed");
 }
 
 function sad() {
-    console.log("sad");
-    // document.getElementsById('active').classList.add("happy");
     $('.active').addClass("sad");
+
+    $('.active').removeClass("happy");
+    $('.active').removeClass("neutral");
+    $('.active').removeClass("angry");
+    $('.active').removeClass("tired");
+    $('.active').removeClass("stressed");
 }
 
-// getDataFromDatabase() async {
+function angry() {
+    $('.active').addClass("angry");
 
-// }
+    $('.active').removeClass("happy");
+    $('.active').removeClass("sad");
+    $('.active').removeClass("neutral");
+    $('.active').removeClass("tired");
+    $('.active').removeClass("stressed");
+}
+
+function tired() {
+    $('.active').addClass("tired");
+
+    $('.active').removeClass("happy");
+    $('.active').removeClass("sad");
+    $('.active').removeClass("neutral");
+    $('.active').removeClass("angry");
+    $('.active').removeClass("stressed");
+}
+
+function stressed() {
+    $('.active').addClass("stressed");
+
+    $('.active').removeClass("happy");
+    $('.active').removeClass("sad");
+    $('.active').removeClass("neutral");
+    $('.active').removeClass("angry");
+    $('.active').removeClass("tired");
+}
