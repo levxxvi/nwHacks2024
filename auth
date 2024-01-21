@@ -69,7 +69,7 @@ def callback():
             
             print(f"Most played track ID in the past day: {most_played_track_id}")
 
-            return render_template('/calendar')
+            return redirect('/calendar')
     
     return redirect('/')
 
@@ -79,11 +79,16 @@ def calendar():
     uid=sp.current_user()['id']
     cursor = mysql.connection.cursor()
     cursor.execute(''' SELECT * FROM moodtracker WHERE User=%s ORDER BY Date DESC LIMIT 1''', (uid,))
-    day = cursor.fetchone()
-    if day!=date.today():
-        cursor.execute(''' INSERT INTO moodtracker VALUES(%s,%s,%s,%s)''', (uid,date.today(),))
+    day = cursor.fetchall()[0][1]
+    print(day)
+    now = date.today()
+    if day!=now:
+        cursor.execute(''' INSERT INTO moodtracker VALUES(%s,%s,%s,%s)''', (uid,now,"",""))
+
+    
     mysql.connection.commit()
     cursor.close()
+    return render_template('calendar.html')
 
 @app.route('/update', methods = ['POST', 'GET'])
 def update():
