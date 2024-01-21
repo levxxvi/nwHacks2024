@@ -40,7 +40,7 @@ def callback():
         auth_manager.get_access_token(request.args.get("code"))
         spotify = spotipy.Spotify(auth_manager=auth_manager)
 
-        return "hehe<a href='/login'>asdasd</a>"
+        return render_template('calendar.html')
     
     return render_template('home.html')
 
