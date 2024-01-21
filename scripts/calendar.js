@@ -26,8 +26,7 @@ const renderCalendar = () => {
 
     for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
         // adding active class to li if the current day, month, and year matched
-        let isToday = i === date.getDate() && currMonth === new Date().getMonth() &&
-            currYear === new Date().getFullYear() ? "active" : "";
+        let isToday = i === date.getDate() && currMonth === new Date().getMonth() && currYear === new Date().getFullYear() ? "active" : "";
         liTag += `<li class="${isToday}">${i}</li>`;
     }
 
@@ -58,10 +57,15 @@ prevNextIcon.forEach(icon => { // getting prev and next icons
 
 function happy() {
     console.log("happy");
-    window.getComputedStyle(
-        document.querySelector('.active'), ':before'
-    ).getPropertyValue('background-color');
-    document.getElementsByClassName("active").background = "#FBF8CC";
+    // document.getElementsById('active').classList.add("happy");
+    // document.getElementsByClassName('active').className = "active, happy";
+    $('.active').addClass("happy");
+}
+
+function sad() {
+    console.log("sad");
+    // document.getElementsById('active').classList.add("happy");
+    $('.active').addClass("sad");
 }
 
 // getDataFromDatabase() async {

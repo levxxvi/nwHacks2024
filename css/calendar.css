@@ -139,6 +139,10 @@ header .current-date {
 }
 
 #happy {
+    background: #FBF8CC;
+}
+
+.happy {
     background-color: #FBF8CC;
 }
 
@@ -148,6 +152,10 @@ header .current-date {
 }
 
 #sad {
+    background-color: #A3C4F3;
+}
+
+.sad {
     background-color: #A3C4F3;
 }
 
