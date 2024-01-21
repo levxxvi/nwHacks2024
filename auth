@@ -3,7 +3,6 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from flask import Flask ,redirect,request, render_template
-from flask_session import Session
 import os
 from datetime import datetime, timedelta
 
@@ -37,11 +36,12 @@ def login():
 def callback():
 
     if request.args.get("code"):
-
+        
         auth_manager.get_access_token(request.args.get("code"))
         spotify = spotipy.Spotify(auth_manager=auth_manager)
 
         return "hehe<a href='/login'>asdasd</a>"
+    
     return render_template('home.html')
 
 @app.route('/recentlyplayed')
@@ -51,6 +51,8 @@ def recentlyplayed():
     past_day_timestamp = (datetime.now() - timedelta(days=1)).timestamp()
 
     recently_played_in_past_day = [track for track in recently_played['items'] if track['played_at'] > past_day_timestamp]
+    return()
+
 if __name__ == "__main__":
     app.run()
     
