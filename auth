@@ -67,14 +67,9 @@ def callback():
             # Find the most played track
             most_played_track_id = max(track_count, key=track_count.get)
             
-            # Get information about the most played track
-            most_played_track = sp.track(most_played_track_id)
-            track_name = most_played_track['name']
-            artists = [artist['name'] for artist in most_played_track['artists']]
-            
-            print(f"Most played track in the past day: {track_name} by {', '.join(artists)}")
+            print(f"Most played track ID in the past day: {most_played_track_id}")
 
-        return render_template('calendar.html')
+            return render_template('calendar.html')
     
     return redirect('/')
 
