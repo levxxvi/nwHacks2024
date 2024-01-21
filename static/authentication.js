@@ -1,8 +1,6 @@
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
-console.log("Funny")
-
 // ui.start('#firebaseui-auth-container', {
 //     signInOptions: [
 //         firebase.auth.EmailAuthProvider.PROVIDER_ID
