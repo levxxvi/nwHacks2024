@@ -1,4 +1,4 @@
-var http = require('http');
+// var http = require('http');
 
 // http.createServer(function (req, res) {
 //     res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -12,9 +12,10 @@ var con = mysql.createConnection({
     database: "nwhacks"
 });
 
-// con.connect(function(err) {
-//     if (err) throw err;
-//     console.log("Connected!");
+con.connect(function(err) {
+    if (err) throw err; 
+    console.log("Connected!");
+});
 //     var sql = "INSERT INTO moodtracker (date, mood) VALUES ('current date', happy')";
 //     con.query(sql, function (err, result) {
 //         if (err) throw err;
