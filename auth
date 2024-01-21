@@ -40,6 +40,7 @@ def login():
 
 @app.route('/callback')
 def callback():
+    global sp
     if request.args.get("code"):
         code = auth_manager.parse_response_code(request.args.get("code"))
         token_info = auth_manager.get_access_token(code)
@@ -65,16 +66,19 @@ def callback():
             
             print(f"Most played track ID in the past day: {most_played_track_id}")
 
-            return render_template('calendar.html')
+            return render_template('/calendar')
     
     return redirect('/')
 
 
 @app.route('/calendar', methods = ['POST', 'GET'])
 def calendar():
-    uid=
+    uid=sp.current_user()['id']
     cursor = mysql.connection.cursor()
-    cursor.execute(''' SELECT * FROM moodtracker WHERE User=%s ORDER BY''', (uid,uid,now,))
+    cursor.execute(''' SELECT * FROM moodtracker WHERE User=%s ORDER BY Date DESC LIMIT 1''', (uid,))
+    day = cursor.fetchone()
+    if day!=date.today():
+        cursor.execute(''' INSERT INTO moodtracker VALUES(%s,%s,%s,%s)''', (uid,date.today(),))
     mysql.connection.commit()
     cursor.close()
 
@@ -82,7 +86,7 @@ def calendar():
 def update():
     arr = ["Happy", "Neutral", "Sad", "Angry", "Tired", "Stressed"]
     mood = request.args.get('data')
-    uid = 
+    uid = sp.current_user()['id']
     while(mood not in arr):
         mood = request.args.get('data')
     now = date.today()
