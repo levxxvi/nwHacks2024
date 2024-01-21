@@ -42,6 +42,7 @@ body {
   background-color: rgba(30,185,85,1);
   padding: 10px 10px;
   margin-bottom: 50%;
+  padding-top: 10%;
   top: 416px;
   left: 75px;
   border: none;
@@ -49,6 +50,8 @@ body {
   text-align: center;
   font-size: xx-large;
   border-radius: 50px;
+  text-decoration: none;
+  color: black;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .v6_76 {
@@ -83,7 +86,7 @@ body {
   display: flex;
   width: 234px;
   height: 234px;
-  background: url("../images/v6_106.png");
+  background: url("v6_106.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
