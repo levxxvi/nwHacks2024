@@ -2,7 +2,7 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from flask import Flask ,redirect,request, render_template
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 import sys
 from flask_mysqldb import MySQL
 
@@ -79,16 +79,19 @@ def callback():
     return redirect('/')
 
 
-
+@app.route('/calendar', methods = ['POST', 'GET'])
+def calendar():
+    
 @app.route('/update', methods = ['POST', 'GET'])
 def update():
     arr = ["Happy", "Neutral", "Sad", "Angry", "Tired", "Stressed"]
     mood = request.args.get('data')
+    uid = 
     while(mood not in arr):
         mood = request.args.get('data')
-    now = datetime.now()
+    now = date.today()
     cursor = mysql.connection.cursor()
-    cursor.execute("UPDATE moodtracker SET Mood = %s limit 1", mood)
+    cursor.execute(''' UPDATE moodtracker SET Mood=%s WHERE User=%s AND Date=%s''', (mood,uid,now,))
     mysql.connection.commit()
     cursor.close()
     return render_template('calendar.html')
