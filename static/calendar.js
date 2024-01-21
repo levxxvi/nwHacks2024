@@ -43,7 +43,7 @@ function checkPreviousMoods() {
 }
 
 function getRandomInt(max) {
-      return Math.floor(Math.random() * max);
+    return Math.floor(Math.random() * max);
 }
 
 const renderCalendar = () => {
@@ -58,6 +58,11 @@ const renderCalendar = () => {
     }
 
     for (let i = 1; i <= lastDateofMonth; i++) { // creating li of all days of current month
+
+        // adding active class to li if the current day, month, and year matched
+        let isToday = i === date.getDate() && currMonth === new Date().getMonth() && currYear === new Date().getFullYear() ? "active" : "";
+        // liTag += `<li class="${isToday}">${i}</li>`;
+
         var mood = getRandomInt(6);
         console.log(mood);
         if (mood == 0) {
@@ -73,10 +78,6 @@ const renderCalendar = () => {
         } else if (mood == 5) {
             liTag += `<li class="stressed">${i}</li>`;
         }
-
-        // adding active class to li if the current day, month, and year matched
-        let isToday = i === date.getDate() && currMonth === new Date().getMonth() && currYear === new Date().getFullYear() ? "active" : "";
-        liTag += `<li class="${isToday}">${i}</li>`;
 
         // checkPreviousMoods();
     }
